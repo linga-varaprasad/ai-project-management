@@ -3,6 +3,9 @@ import { StatCard } from "@/components/dashboard/StatCard";
 import { TaskList } from "@/components/dashboard/TaskList";
 import { ProjectChart } from "@/components/dashboard/ProjectChart";
 import { ActivityTimeline } from "@/components/dashboard/ActivityTimeline";
+import { KanbanBoard } from "@/components/tasks/KanbanBoard";
+import { TeamChat } from "@/components/collaboration/TeamChat";
+import { AnalyticsDashboard } from "@/components/analytics/AnalyticsDashboard";
 import { Users, Target, Clock, Briefcase } from "lucide-react";
 
 const Index = () => {
@@ -47,6 +50,17 @@ const Index = () => {
           </div>
           <div>
             <TaskList />
+          </div>
+        </div>
+
+        <KanbanBoard />
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2">
+            <AnalyticsDashboard />
+          </div>
+          <div>
+            <TeamChat />
           </div>
         </div>
 
