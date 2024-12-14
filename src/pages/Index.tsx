@@ -1,6 +1,8 @@
 import { AppLayout } from "@/components/layout/AppLayout";
 import { StatCard } from "@/components/dashboard/StatCard";
 import { TaskList } from "@/components/dashboard/TaskList";
+import { ProjectChart } from "@/components/dashboard/ProjectChart";
+import { ActivityTimeline } from "@/components/dashboard/ActivityTimeline";
 import { Users, Target, Clock, Briefcase } from "lucide-react";
 
 const Index = () => {
@@ -39,11 +41,24 @@ const Index = () => {
           />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <TaskList />
-          <div className="bg-white rounded-xl border p-6">
-            <h2 className="text-lg font-semibold mb-4">Activity Timeline</h2>
-            <p className="text-gray-500">Coming soon...</p>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2">
+            <ProjectChart />
+          </div>
+          <div>
+            <TaskList />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2">
+            <div className="bg-white rounded-xl border p-6">
+              <h2 className="text-lg font-semibold mb-4">Project Details</h2>
+              <p className="text-gray-500">More project details coming soon...</p>
+            </div>
+          </div>
+          <div>
+            <ActivityTimeline />
           </div>
         </div>
       </div>
