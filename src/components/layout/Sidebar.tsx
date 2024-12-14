@@ -1,4 +1,17 @@
-import { Home, LayoutDashboard, Users, BarChart, Settings, ChevronLeft, ChevronRight } from "lucide-react";
+import { 
+  LayoutDashboard, 
+  Users, 
+  BarChart, 
+  Settings, 
+  ChevronLeft, 
+  ChevronRight,
+  MessageSquare,
+  Bot,
+  Video,
+  FileUp,
+  Trophy,
+  Search
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
@@ -10,16 +23,21 @@ interface SidebarProps {
 export const Sidebar = ({ isOpen, onToggle }: SidebarProps) => {
   const menuItems = [
     { icon: LayoutDashboard, label: "Dashboard", href: "/" },
-    { icon: Home, label: "Projects", href: "/projects" },
-    { icon: Users, label: "Team", href: "/team" },
+    { icon: MessageSquare, label: "Team Chat", href: "/chat" },
+    { icon: Video, label: "Video Calls", href: "/video" },
+    { icon: FileUp, label: "File Sharing", href: "/files" },
+    { icon: Bot, label: "AI Assistant", href: "/ai-assistant" },
     { icon: BarChart, label: "Analytics", href: "/analytics" },
+    { icon: Trophy, label: "Leaderboard", href: "/leaderboard" },
+    { icon: Search, label: "Search", href: "/search" },
+    { icon: Users, label: "Team", href: "/team" },
     { icon: Settings, label: "Settings", href: "/settings" },
   ];
 
   return (
     <aside
       className={cn(
-        "fixed left-0 top-0 h-screen bg-white border-r transition-all duration-300",
+        "fixed left-0 top-0 h-screen bg-sidebar-background border-r transition-all duration-300",
         isOpen ? "w-64" : "w-20"
       )}
     >
@@ -35,8 +53,9 @@ export const Sidebar = ({ isOpen, onToggle }: SidebarProps) => {
             key={item.label}
             href={item.href}
             className={cn(
-              "flex items-center gap-4 px-4 py-3 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors",
-              !isOpen && "justify-center"
+              "flex items-center gap-4 px-4 py-3 rounded-lg text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors",
+              !isOpen && "justify-center",
+              item.href === window.location.pathname && "bg-sidebar-accent text-sidebar-accent-foreground"
             )}
           >
             <item.icon className="h-5 w-5" />
