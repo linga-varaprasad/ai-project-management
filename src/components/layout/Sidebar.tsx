@@ -44,7 +44,7 @@ export const Sidebar = ({ isOpen, onToggle }: SidebarProps) => {
       )}
     >
       <div className="flex h-16 items-center justify-between px-4 border-b">
-        {isOpen && <span className="text-xl font-bold text-primary">SaaSFlow</span>}
+        {isOpen && <span className="text-xl font-bold text-primary">AI-prozet-management</span>}
         <Button variant="ghost" size="icon" onClick={onToggle} className="ml-auto">
           {isOpen ? <ChevronLeft className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
         </Button>
