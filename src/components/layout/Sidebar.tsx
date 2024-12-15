@@ -10,7 +10,8 @@ import {
   Video,
   FileUp,
   Trophy,
-  Search
+  Search,
+  ListTodo
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -23,6 +24,7 @@ interface SidebarProps {
 export const Sidebar = ({ isOpen, onToggle }: SidebarProps) => {
   const menuItems = [
     { icon: LayoutDashboard, label: "Dashboard", href: "/" },
+    { icon: ListTodo, label: "Task Management", href: "/tasks" },
     { icon: MessageSquare, label: "Team Chat", href: "/chat" },
     { icon: Video, label: "Video Calls", href: "/video" },
     { icon: FileUp, label: "File Sharing", href: "/files" },

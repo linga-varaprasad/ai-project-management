@@ -11,6 +11,7 @@ import Register from "./pages/auth/Register";
 import Onboarding from "./pages/auth/Onboarding";
 import Dashboard from "./pages/Dashboard";
 import ProjectManagement from "./pages/ProjectManagement";
+import TaskManagement from "./pages/TaskManagement";
 import TeamChat from "./pages/TeamChat";
 import VideoCall from "./pages/VideoCall";
 import FileSharing from "./pages/FileSharing";
@@ -32,6 +33,7 @@ const App = () => (
           <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/projects" element={<ProjectManagement />} />
+          <Route path="/tasks" element={<TaskManagement />} />
           <Route path="/chat" element={<TeamChat />} />
           <Route path="/video" element={<VideoCall />} />
           <Route path="/files" element={<FileSharing />} />
