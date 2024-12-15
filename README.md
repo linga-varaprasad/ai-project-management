@@ -1,18 +1,7 @@
-# Welcome to your Lovable project
-
-## Project info
-
-**URL**: https://lovable.dev/projects/b4c6f970-b2eb-434a-bad3-05bc080ec48f
+# AI-PROJECT-MANAGEMENT
 
 ## How can I edit this code?
 
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/b4c6f970-b2eb-434a-bad3-05bc080ec48f) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
 
 **Use your preferred IDE**
 
