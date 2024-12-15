@@ -1,5 +1,6 @@
 import { Bell, Search, Menu, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { BadgeDisplay } from "@/components/gamification/BadgeDisplay";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,6 +10,31 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
+
+// Sample badges data - in a real app, this would come from your backend
+const userBadges = [
+  {
+    id: "1",
+    name: "Task Master",
+    description: "Completed 100 tasks",
+    icon: "TaskMaster" as const,
+    earned: true,
+  },
+  {
+    id: "2",
+    name: "Quick Starter",
+    description: "Completed 10 tasks in one day",
+    icon: "QuickStarter" as const,
+    earned: true,
+  },
+  {
+    id: "3",
+    name: "Team Player",
+    description: "Collaborated on 50 projects",
+    icon: "TeamPlayer" as const,
+    earned: false,
+  },
+];
 
 interface HeaderProps {
   onMenuClick: () => void;
@@ -35,6 +61,8 @@ export const Header = ({ onMenuClick }: HeaderProps) => {
       </div>
 
       <div className="flex items-center gap-4">
+        <BadgeDisplay badges={userBadges} />
+        
         <Button variant="ghost" size="icon">
           <Bell className="h-5 w-5" />
         </Button>

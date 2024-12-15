@@ -17,6 +17,7 @@ import VideoCall from "./pages/VideoCall";
 import FileSharing from "./pages/FileSharing";
 import Analytics from "./pages/Analytics";
 import Settings from "./pages/Settings";
+import Gamification from "./pages/Gamification";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +40,7 @@ const App = () => (
           <Route path="/files" element={<FileSharing />} />
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/gamification" element={<Gamification />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
