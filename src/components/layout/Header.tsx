@@ -47,7 +47,6 @@ export const Header = ({ onMenuClick }: HeaderProps) => {
         <Button variant="ghost" size="icon" className="md:hidden" onClick={onMenuClick}>
           <Menu className="h-5 w-5" />
         </Button>
-        <span className="text-xl font-bold text-primary hidden md:block">SaaSFlow</span>
       </div>
 
       <div className="flex-1 max-w-xl hidden md:block">
