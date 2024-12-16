@@ -43,9 +43,9 @@ const mockProjects = [
 
 const ProjectManagement = () => {
   const [projects, setProjects] = useState(mockProjects);
-  const [filterTeam, setFilterTeam] = useState("");
-  const [filterStatus, setFilterStatus] = useState("");
-  const [filterPriority, setFilterPriority] = useState("");
+  const [filterTeam, setFilterTeam] = useState<string | undefined>();
+  const [filterStatus, setFilterStatus] = useState<string | undefined>();
+  const [filterPriority, setFilterPriority] = useState<string | undefined>();
 
   const filteredProjects = projects.filter((project) => {
     return (
@@ -121,7 +121,7 @@ const ProjectManagement = () => {
               <SelectValue placeholder="Filter by Team" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Teams</SelectItem>
+              <SelectItem value="all-teams">All Teams</SelectItem>
               <SelectItem value="Design">Design</SelectItem>
               <SelectItem value="Development">Development</SelectItem>
             </SelectContent>
@@ -132,7 +132,7 @@ const ProjectManagement = () => {
               <SelectValue placeholder="Filter by Status" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Statuses</SelectItem>
+              <SelectItem value="all-statuses">All Statuses</SelectItem>
               <SelectItem value="Planning">Planning</SelectItem>
               <SelectItem value="In Progress">In Progress</SelectItem>
               <SelectItem value="Completed">Completed</SelectItem>
@@ -144,7 +144,7 @@ const ProjectManagement = () => {
               <SelectValue placeholder="Filter by Priority" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Priorities</SelectItem>
+              <SelectItem value="all-priorities">All Priorities</SelectItem>
               <SelectItem value="High">High</SelectItem>
               <SelectItem value="Medium">Medium</SelectItem>
               <SelectItem value="Low">Low</SelectItem>
