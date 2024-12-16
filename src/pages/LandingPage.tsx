@@ -33,7 +33,7 @@ const LandingPage = () => {
       <div className="container mx-auto px-4 py-16">
         <div className="text-center space-y-6">
           <h1 className="text-4xl md:text-6xl font-bold">
-            Welcome to SaaSFlow
+            Welcome to Ai-projectmanager
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Your all-in-one platform for project management, team collaboration, and productivity
