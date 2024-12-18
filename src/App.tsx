@@ -2,8 +2,9 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
+import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 
 // Page imports
 import LandingPage from "./pages/LandingPage";
@@ -30,19 +31,97 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
+            {/* Public routes */}
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/onboarding" element={<Onboarding />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/projects" element={<ProjectManagement />} />
-            <Route path="/tasks" element={<TaskManagement />} />
-            <Route path="/chat" element={<TeamChat />} />
-            <Route path="/video" element={<VideoCall />} />
-            <Route path="/files" element={<FileSharing />} />
-            <Route path="/analytics" element={<Analytics />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/gamification" element={<Gamification />} />
+            
+            {/* New user route */}
+            <Route 
+              path="/onboarding" 
+              element={
+                <ProtectedRoute allowedRoles={["new_user"]}>
+                  <Onboarding />
+                </ProtectedRoute>
+              } 
+            />
+
+            {/* Protected routes for authenticated users */}
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute allowedRoles={["admin", "team_member"]}>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/projects"
+              element={
+                <ProtectedRoute allowedRoles={["admin", "team_member"]}>
+                  <ProjectManagement />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/tasks"
+              element={
+                <ProtectedRoute allowedRoles={["admin", "team_member"]}>
+                  <TaskManagement />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/chat"
+              element={
+                <ProtectedRoute allowedRoles={["admin", "team_member"]}>
+                  <TeamChat />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/video"
+              element={
+                <ProtectedRoute allowedRoles={["admin", "team_member"]}>
+                  <VideoCall />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/files"
+              element={
+                <ProtectedRoute allowedRoles={["admin", "team_member"]}>
+                  <FileSharing />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/analytics"
+              element={
+                <ProtectedRoute allowedRoles={["admin", "team_member"]}>
+                  <Analytics />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/settings"
+              element={
+                <ProtectedRoute allowedRoles={["admin", "team_member"]}>
+                  <Settings />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/gamification"
+              element={
+                <ProtectedRoute allowedRoles={["admin", "team_member"]}>
+                  <Gamification />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Catch all route */}
+            <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
