@@ -2,77 +2,91 @@ import { AppLayout } from "@/components/layout/AppLayout";
 import { ProjectChart } from "@/components/dashboard/ProjectChart";
 import { TaskList } from "@/components/dashboard/TaskList";
 import { StatCard } from "@/components/dashboard/StatCard";
-import { ActivityTimeline } from "@/components/dashboard/ActivityTimeline";
-import { Users, Target, Clock, Briefcase } from "lucide-react";
+import { AnalyticsDashboard } from "@/components/analytics/AnalyticsDashboard";
+import { Button } from "@/components/ui/button";
+import { Plus, FileText, BarChart3 } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
 
 const Dashboard = () => {
+  const { toast } = useToast();
+
+  const handleQuickAction = (action: string) => {
+    toast({
+      title: "Coming Soon",
+      description: `${action} feature will be available soon!`,
+    });
+  };
+
   return (
     <AppLayout>
       <div className="space-y-6">
-        <div>
+        <div className="flex items-center justify-between">
           <h1 className="text-2xl font-bold">Dashboard</h1>
-          <p className="text-gray-500 mt-1">Welcome back! Here's what's happening today.</p>
+          <div className="flex gap-3">
+            <Button
+              onClick={() => handleQuickAction("Create Task")}
+              className="gap-2"
+            >
+              <Plus className="h-4 w-4" />
+              Create Task
+            </Button>
+            <Button
+              onClick={() => handleQuickAction("New Project")}
+              variant="outline"
+              className="gap-2"
+            >
+              <FileText className="h-4 w-4" />
+              New Project
+            </Button>
+            <Button
+              onClick={() => handleQuickAction("Generate Report")}
+              variant="outline"
+              className="gap-2"
+            >
+              <BarChart3 className="h-4 w-4" />
+              Generate Report
+            </Button>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Project Status Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <StatCard
-            title="Total Projects"
+            title="Active Projects"
             value="12"
-            icon={Briefcase}
             trend={{ value: 8, isPositive: true }}
+            icon={BarChart3}
+            className="bg-blue-50"
           />
           <StatCard
-            title="Team Members"
-            value="24"
-            icon={Users}
+            title="Completed Projects"
+            value="45"
             trend={{ value: 12, isPositive: true }}
+            icon={FileText}
+            className="bg-green-50"
           />
           <StatCard
-            title="Tasks Completed"
-            value="64%"
-            icon={Target}
-            trend={{ value: 5, isPositive: true }}
-          />
-          <StatCard
-            title="Overdue Tasks"
+            title="Delayed Projects"
             value="3"
-            icon={Clock}
             trend={{ value: 2, isPositive: false }}
+            icon={BarChart3}
+            className="bg-red-50"
           />
         </div>
 
+        {/* Analytics and Task Management */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
-            <ProjectChart />
+            <AnalyticsDashboard />
           </div>
           <div>
             <TaskList />
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2">
-            <div className="bg-white rounded-xl border p-6">
-              <h2 className="text-lg font-semibold mb-4">Recent Activity</h2>
-              <ActivityTimeline />
-            </div>
-          </div>
-          <div>
-            <div className="bg-white rounded-xl border p-6">
-              <h2 className="text-lg font-semibold mb-4">Quick Actions</h2>
-              <div className="space-y-2">
-                <button className="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors">
-                  Create New Project
-                </button>
-                <button className="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors">
-                  Add Task
-                </button>
-                <button className="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors">
-                  Schedule Meeting
-                </button>
-              </div>
-            </div>
-          </div>
+        {/* Project Progress Chart */}
+        <div className="mt-6">
+          <ProjectChart />
         </div>
       </div>
     </AppLayout>
