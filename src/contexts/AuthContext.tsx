@@ -26,17 +26,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Check active sessions and sets the user
     supabase.auth.getSession().then(async ({ data: { session } }) => {
       if (session?.user) {
-        // Fetch user role from profiles table
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('role')
-          .eq('id', session.user.id)
-          .single();
+        try {
+          const { data: profile, error } = await supabase
+            .from('profiles')
+            .select('role')
+            .eq('id', session.user.id)
+            .single();
 
-        setUser({
-          ...session.user,
-          role: profile?.role || 'team_member'
-        });
+          if (error && error.code !== 'PGRST116') {
+            console.error('Error fetching profile:', error);
+          }
+
+          setUser({
+            ...session.user,
+            role: profile?.role || 'team_member'
+          });
+        } catch (error) {
+          console.error('Error setting user:', error);
+          setUser(session.user);
+        }
       } else {
         setUser(null);
       }
@@ -46,17 +54,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Listen for changes on auth state
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
       if (session?.user) {
-        // Fetch user role from profiles table
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('role')
-          .eq('id', session.user.id)
-          .single();
+        try {
+          const { data: profile, error } = await supabase
+            .from('profiles')
+            .select('role')
+            .eq('id', session.user.id)
+            .single();
 
-        setUser({
-          ...session.user,
-          role: profile?.role || 'team_member'
-        });
+          if (error && error.code !== 'PGRST116') {
+            console.error('Error fetching profile:', error);
+          }
+
+          setUser({
+            ...session.user,
+            role: profile?.role || 'team_member'
+          });
+        } catch (error) {
+          console.error('Error setting user:', error);
+          setUser(session.user);
+        }
       } else {
         setUser(null);
       }
@@ -105,17 +121,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         password,
       });
       if (error) throw error;
-
-      // Create a profile with default role
-      if (data.user) {
-        await supabase.from('profiles').insert([
-          {
-            id: data.user.id,
-            role: 'new_user',
-            email: email
-          }
-        ]);
-      }
 
       toast({
         title: "Success!",
