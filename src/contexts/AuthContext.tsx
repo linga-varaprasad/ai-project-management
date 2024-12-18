@@ -35,7 +35,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         setUser({
           ...session.user,
-          role: profile?.role || 'team_member' // Default to team_member if no role is set
+          role: profile?.role || 'team_member'
         });
       } else {
         setUser(null);
@@ -71,17 +71,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         email,
         password,
       });
-      if (error) throw error;
+      
+      if (error) {
+        if (error.message.includes('Email not confirmed')) {
+          toast({
+            title: "Email Not Confirmed",
+            description: "Please check your email and click the confirmation link before signing in.",
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: "Error",
+            description: error.message,
+            variant: "destructive",
+          });
+        }
+        throw error;
+      }
+
       toast({
         title: "Welcome back!",
         description: "You have successfully signed in.",
       });
     } catch (error) {
-      toast({
-        title: "Error",
-        description: error.message,
-        variant: "destructive",
-      });
       throw error;
     }
   };
@@ -107,7 +119,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       toast({
         title: "Success!",
-        description: "Please check your email to verify your account.",
+        description: "Please check your email to confirm your account before signing in.",
       });
     } catch (error) {
       toast({

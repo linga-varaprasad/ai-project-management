@@ -21,6 +21,7 @@ const Login = () => {
       await signIn(email, password);
       navigate("/dashboard");
     } catch (error) {
+      // Error is already handled in AuthContext
       console.error("Login error:", error);
     } finally {
       setIsLoading(false);
