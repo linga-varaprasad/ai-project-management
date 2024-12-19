@@ -33,13 +33,20 @@ export const ProtectedRoute = ({ children, allowedRoles = [] }: ProtectedRoutePr
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
+  // If no roles are required, allow access
+  if (allowedRoles.length === 0) {
+    return <>{children}</>;
+  }
+
   // For the new_user role check
   if (allowedRoles.includes("new_user") && user.role !== "new_user") {
     return <Navigate to="/dashboard" replace />;
   }
 
-  // For other role checks
-  if (allowedRoles.length > 0 && !allowedRoles.includes(user.role)) {
+  // For other role checks, default to team_member if no role is set
+  const userRole = user.role || "team_member";
+  
+  if (!allowedRoles.includes(userRole)) {
     if (!hasShownToast.current) {
       toast({
         title: "Access denied",
