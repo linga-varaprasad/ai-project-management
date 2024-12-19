@@ -1,5 +1,6 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import { useEffect } from "react";
 import { useToast } from "@/components/ui/use-toast";
 
 interface ProtectedRouteProps {
@@ -8,26 +9,34 @@ interface ProtectedRouteProps {
 }
 
 export const ProtectedRoute = ({ children, allowedRoles = [] }: ProtectedRouteProps) => {
-  const { user, loading } = useAuth();
+  const { user, isLoading } = useAuth();
   const location = useLocation();
   const { toast } = useToast();
 
-  // Handle loading state
-  if (loading) {
+  useEffect(() => {
+    if (!isLoading && !user) {
+      toast({
+        title: "Authentication required",
+        description: "Please log in to access this page",
+        variant: "destructive",
+      });
+    }
+  }, [user, isLoading, toast]);
+
+  if (isLoading) {
     return <div>Loading...</div>;
   }
 
-  // If user is not authenticated, redirect to login
   if (!user) {
-    toast({
-      title: "Authentication required",
-      description: "Please log in to access this page",
-      variant: "destructive",
-    });
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  // If roles are specified and user's role doesn't match, redirect to dashboard
+  // For the new_user role check
+  if (allowedRoles.includes("new_user") && user.role !== "new_user") {
+    return <Navigate to="/dashboard" replace />;
+  }
+
+  // For other role checks
   if (allowedRoles.length > 0 && !allowedRoles.includes(user.role)) {
     toast({
       title: "Access denied",
