@@ -1,12 +1,22 @@
 import { CheckCircle2, Clock } from "lucide-react";
+import { useState } from "react";
 
-const tasks = [
+interface Task {
+  id: number;
+  title: string;
+  status: "completed" | "pending";
+  date: string;
+}
+
+const initialTasks = [
   { id: 1, title: "Update landing page", status: "completed", date: "Today" },
   { id: 2, title: "Design new features", status: "pending", date: "Tomorrow" },
   { id: 3, title: "Review pull requests", status: "pending", date: "Today" },
-];
+] as Task[];
 
 export const TaskList = () => {
+  const [tasks] = useState<Task[]>(initialTasks);
+
   return (
     <div className="bg-white rounded-xl border p-6">
       <h2 className="text-lg font-semibold mb-4">Recent Tasks</h2>
