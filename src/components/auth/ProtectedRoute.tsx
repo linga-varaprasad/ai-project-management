@@ -33,13 +33,16 @@ export const ProtectedRoute = ({ children, allowedRoles = [] }: ProtectedRoutePr
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  // If no roles are required, allow access
-  if (allowedRoles.length === 0) {
+  // If no roles are required or user is admin, allow access
+  if (allowedRoles.length === 0 || user.role === "admin") {
     return <>{children}</>;
   }
 
   // For the new_user role check
-  if (allowedRoles.includes("new_user") && user.role !== "new_user") {
+  if (allowedRoles.includes("new_user")) {
+    if (user.role === "new_user") {
+      return <>{children}</>;
+    }
     return <Navigate to="/dashboard" replace />;
   }
 
