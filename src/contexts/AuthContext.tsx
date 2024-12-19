@@ -9,7 +9,7 @@ interface AuthUser extends User {
 
 interface AuthContextType {
   user: AuthUser | null;
-  loading: boolean;
+  isLoading: boolean; // Changed from 'loading' to 'isLoading' for consistency
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
@@ -19,7 +19,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true); // Changed from 'loading' to 'isLoading'
   const { toast } = useToast();
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (session?.user) {
         setUser(session.user);
       }
-      setLoading(false);
+      setIsLoading(false);
     });
 
     // Listen for changes on auth state
@@ -38,7 +38,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       } else {
         setUser(null);
       }
-      setLoading(false);
+      setIsLoading(false);
     });
 
     return () => subscription.unsubscribe();
@@ -108,7 +108,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, signIn, signUp, signOut }}>
+    <AuthContext.Provider value={{ user, isLoading, signIn, signUp, signOut }}>
       {children}
     </AuthContext.Provider>
   );
