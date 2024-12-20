@@ -1,6 +1,8 @@
 import { Bell, Search, Menu, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { BadgeDisplay } from "@/components/gamification/BadgeDisplay";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -41,6 +43,18 @@ interface HeaderProps {
 }
 
 export const Header = ({ onMenuClick }: HeaderProps) => {
+  const { signOut } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      navigate('/login');
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+  };
+
   return (
     <header className="h-16 border-b bg-white px-6 flex items-center justify-between gap-4">
       <div className="flex items-center gap-4">
@@ -81,7 +95,7 @@ export const Header = ({ onMenuClick }: HeaderProps) => {
             <DropdownMenuItem>Profile</DropdownMenuItem>
             <DropdownMenuItem>Settings</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Log out</DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogout}>Log out</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
