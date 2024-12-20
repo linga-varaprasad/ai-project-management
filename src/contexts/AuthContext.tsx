@@ -9,7 +9,7 @@ interface AuthUser extends User {
 
 interface AuthContextType {
   user: AuthUser | null;
-  isLoading: boolean; // Changed from 'loading' to 'isLoading' for consistency
+  isLoading: boolean;
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
@@ -19,14 +19,19 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
-  const [isLoading, setIsLoading] = useState(true); // Changed from 'loading' to 'isLoading'
+  const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
 
   useEffect(() => {
     // Check active sessions and sets the user
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session?.user) {
-        setUser(session.user);
+        // Set default role for new users
+        const userWithRole = {
+          ...session.user,
+          role: 'team_member'
+        };
+        setUser(userWithRole);
       }
       setIsLoading(false);
     });
@@ -34,7 +39,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Listen for changes on auth state
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session?.user) {
-        setUser(session.user);
+        // Set default role for new users
+        const userWithRole = {
+          ...session.user,
+          role: 'team_member'
+        };
+        setUser(userWithRole);
       } else {
         setUser(null);
       }

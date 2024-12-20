@@ -29,37 +29,38 @@ export const ProtectedRoute = ({ children, allowedRoles = [] }: ProtectedRoutePr
     return <div>Loading...</div>;
   }
 
+  // If not logged in, redirect to login
   if (!user) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  // If no roles are required or user is admin, allow access
-  if (allowedRoles.length === 0 || user.role === "admin") {
+  // If logged in and no specific roles are required, allow access
+  if (allowedRoles.length === 0) {
     return <>{children}</>;
   }
 
-  // For the new_user role check
+  // For new users, allow access to onboarding
   if (allowedRoles.includes("new_user")) {
-    if (user.role === "new_user") {
-      return <>{children}</>;
-    }
-    return <Navigate to="/dashboard" replace />;
+    return <>{children}</>;
   }
 
-  // For other role checks, default to team_member if no role is set
+  // Default role is team_member if no role is set
   const userRole = user.role || "team_member";
-  
-  if (!allowedRoles.includes(userRole)) {
-    if (!hasShownToast.current) {
-      toast({
-        title: "Access denied",
-        description: "You don't have permission to access this page",
-        variant: "destructive",
-      });
-      hasShownToast.current = true;
-    }
-    return <Navigate to="/dashboard" replace />;
+
+  // Allow access if user has required role
+  if (allowedRoles.includes(userRole) || userRole === "admin") {
+    return <>{children}</>;
   }
 
-  return <>{children}</>;
+  // If we get here, user doesn't have required role
+  if (!hasShownToast.current) {
+    toast({
+      title: "Access denied",
+      description: "You don't have permission to access this page",
+      variant: "destructive",
+    });
+    hasShownToast.current = true;
+  }
+  
+  return <Navigate to="/dashboard" replace />;
 };
