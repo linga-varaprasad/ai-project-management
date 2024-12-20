@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -29,6 +29,7 @@ export const ProjectList = () => {
   const [statusFilter, setStatusFilter] = useState<string>("");
   const [priorityFilter, setPriorityFilter] = useState<string>("");
   const { toast } = useToast();
+  const queryClient = useQueryClient();
 
   const { data: projects, isLoading } = useQuery({
     queryKey: ["projects"],
@@ -75,7 +76,7 @@ export const ProjectList = () => {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, []);
+  }, [queryClient]);
 
   if (isLoading) {
     return <div>Loading projects...</div>;
