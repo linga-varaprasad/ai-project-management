@@ -1,8 +1,8 @@
 import { AppLayout } from "@/components/layout/AppLayout";
+import { ProjectList } from "@/components/projects/ProjectList";
 import { ProjectChart } from "@/components/dashboard/ProjectChart";
 import { TaskList } from "@/components/dashboard/TaskList";
 import { StatCard } from "@/components/dashboard/StatCard";
-import { AnalyticsDashboard } from "@/components/analytics/AnalyticsDashboard";
 import { Button } from "@/components/ui/button";
 import { Plus, FileText, BarChart3 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
@@ -29,14 +29,6 @@ const Dashboard = () => {
             >
               <Plus className="h-4 w-4" />
               Create Task
-            </Button>
-            <Button
-              onClick={() => handleQuickAction("New Project")}
-              variant="outline"
-              className="gap-2"
-            >
-              <FileText className="h-4 w-4" />
-              New Project
             </Button>
             <Button
               onClick={() => handleQuickAction("Generate Report")}
@@ -74,19 +66,17 @@ const Dashboard = () => {
           />
         </div>
 
+        {/* Project List */}
+        <ProjectList />
+
         {/* Analytics and Task Management */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
-            <AnalyticsDashboard />
+            <ProjectChart />
           </div>
           <div>
             <TaskList />
           </div>
-        </div>
-
-        {/* Project Progress Chart */}
-        <div className="mt-6">
-          <ProjectChart />
         </div>
       </div>
     </AppLayout>
