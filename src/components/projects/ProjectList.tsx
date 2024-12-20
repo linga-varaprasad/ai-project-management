@@ -26,8 +26,8 @@ interface Project {
 
 export const ProjectList = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [statusFilter, setStatusFilter] = useState<string>("");
-  const [priorityFilter, setPriorityFilter] = useState<string>("");
+  const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [priorityFilter, setPriorityFilter] = useState<string>("all");
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -53,8 +53,8 @@ export const ProjectList = () => {
   });
 
   const filteredProjects = projects?.filter((project) => {
-    const matchesStatus = !statusFilter || project.status === statusFilter;
-    const matchesPriority = !priorityFilter || project.priority === priorityFilter;
+    const matchesStatus = statusFilter === "all" || project.status === statusFilter;
+    const matchesPriority = priorityFilter === "all" || project.priority === priorityFilter;
     return matchesStatus && matchesPriority;
   });
 
@@ -67,7 +67,6 @@ export const ProjectList = () => {
         { event: "*", schema: "public", table: "projects" },
         (payload) => {
           console.log("Change received!", payload);
-          // React Query will automatically refresh the data
           queryClient.invalidateQueries({ queryKey: ["projects"] });
         }
       )
@@ -91,7 +90,7 @@ export const ProjectList = () => {
               <SelectValue placeholder="Filter by Status" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Statuses</SelectItem>
+              <SelectItem value="all">All Statuses</SelectItem>
               <SelectItem value="pending">Pending</SelectItem>
               <SelectItem value="in_progress">In Progress</SelectItem>
               <SelectItem value="completed">Completed</SelectItem>
@@ -103,7 +102,7 @@ export const ProjectList = () => {
               <SelectValue placeholder="Filter by Priority" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Priorities</SelectItem>
+              <SelectItem value="all">All Priorities</SelectItem>
               <SelectItem value="low">Low</SelectItem>
               <SelectItem value="medium">Medium</SelectItem>
               <SelectItem value="high">High</SelectItem>
