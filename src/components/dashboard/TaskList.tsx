@@ -2,14 +2,9 @@ import { CheckCircle2, Clock } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { Database } from "@/integrations/supabase/types";
 
-interface Task {
-  id: string;
-  title: string;
-  status: string;
-  due_date: string;
-  priority: string;
-}
+type Task = Database["public"]["Tables"]["tasks"]["Row"];
 
 export const TaskList = () => {
   const { toast } = useToast();

@@ -19,16 +19,19 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { Textarea } from "@/components/ui/textarea";
+import { Database } from "@/integrations/supabase/types";
 
 interface CreateTaskModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
+type TaskInsert = Database["public"]["Tables"]["tasks"]["Insert"];
+
 export const CreateTaskModal = ({ isOpen, onClose }: CreateTaskModalProps) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [priority, setPriority] = useState("medium");
+  const [priority, setPriority] = useState<TaskInsert["priority"]>("medium");
   const [dueDate, setDueDate] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   
