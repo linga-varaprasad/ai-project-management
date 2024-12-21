@@ -11,7 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
-import { Plus, Filter } from "lucide-react";
+import { Plus } from "lucide-react";
 import { CreateProjectModal } from "./CreateProjectModal";
 
 interface Project {
