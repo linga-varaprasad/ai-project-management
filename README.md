@@ -49,10 +49,5 @@ This project is built with .
 - shadcn-ui
 - Tailwind CSS
 
-## How can I deploy this project?
+## Here is the Deployed Project :  https://ai-project-management.lovable.app/
 
-Simply open [Lovable](https://lovable.dev/projects/b4c6f970-b2eb-434a-bad3-05bc080ec48f) and click on Share -> Publish.
-
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
