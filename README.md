@@ -1,7 +1,5 @@
 # AI-PROJECT-MANAGEMENT
 
-## How can I edit this code?
-
 
 **Use your preferred IDE**
 
@@ -50,4 +48,6 @@ This project is built with .
 - Tailwind CSS
 
 ## Here is the Deployed Project :  https://ai-project-management.lovable.app/
-
+## Note
+Ai is not included in this project 
+I had used Lovable ai to do this project
